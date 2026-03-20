@@ -44,6 +44,7 @@ const DEFAULT_OPTIONS: ConvertOptions = {
   splitByUnit: false,
   qmode: 'reset',
   unitOffsets: {},
+  unitTemplates: {},
 }
 
 const DEFAULT_SEGMENTS: CodeSegments = {
