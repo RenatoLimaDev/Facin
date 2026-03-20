@@ -16,7 +16,7 @@ async function extractOdt(buf: ArrayBuffer): Promise<string> {
   const bytes = new Uint8Array(buf)
 
   // Find "content.xml" entry in the ZIP by scanning for local file headers (PK\x03\x04)
-  const entries = parseZipEntries(bytes)
+  const entries = await parseZipEntries(bytes)
   const contentEntry = entries.find(e => e.name === 'content.xml')
   if (!contentEntry) throw new Error('content.xml não encontrado no arquivo ODT.')
 
@@ -41,7 +41,7 @@ async function extractOdt(buf: ArrayBuffer): Promise<string> {
 
 interface ZipEntry { name: string; data: Uint8Array }
 
-function parseZipEntries(bytes: Uint8Array): ZipEntry[] {
+async function parseZipEntries(bytes: Uint8Array): Promise<ZipEntry[]> {
   const entries: ZipEntry[] = []
   let i = 0
 
