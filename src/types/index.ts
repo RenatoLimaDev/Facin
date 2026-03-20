@@ -36,6 +36,7 @@ export interface ConvertOptions {
   splitByUnit: boolean
   qmode: QMode
   unitOffsets: Record<string, number>
+  unitTemplates: Record<string, string>
 }
 
 export interface CodeSegments {
