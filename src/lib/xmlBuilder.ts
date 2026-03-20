@@ -16,8 +16,10 @@ function resolveQuestionName(
   qNum: number,
   prefix: string,
   codeTemplate: string,
-  detectedPattern: string
+  detectedPattern: string,
+  unitTemplate?: string
 ): string {
+  if (unitTemplate) return escapeXml(unitTemplate.replace(/\{n\}/g, String(qNum)))
   if (codeTemplate) return escapeXml(codeTemplate.replace(/\{n\}/g, String(qNum)))
   if (p.codigoQ)    return escapeXml(p.codigoQ)
   if (detectedPattern) return escapeXml(detectedPattern.replace(/\{n\}/g, String(qNum)))
@@ -29,9 +31,11 @@ export function buildXml(
   perguntas: Question[],
   opts: ConvertOptions,
   startQ: number,
-  detectedPattern: string
+  detectedPattern: string,
+  unitKey?: string
 ): string {
-  const { questionType, prefix, codeTemplate, penalty, shuffle, fbCorrect, fbIncorrect, useAltFeedback } = opts
+  const { questionType, prefix, codeTemplate, penalty, shuffle, fbCorrect, fbIncorrect, useAltFeedback, unitTemplates } = opts
+  const unitTemplate = unitKey && unitTemplates?.[unitKey] ? unitTemplates[unitKey] : undefined
 
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<quiz>\n\n'
 
@@ -39,7 +43,7 @@ export function buildXml(
     const corretas   = p.alternativas.filter(a => a.correta).length
     const fbGeral    = p.feedbackGeral || fbCorrect || fbIncorrect || ''
     const qNum       = startQ + i
-    const nomePergunta = resolveQuestionName(p, qNum, prefix, codeTemplate, detectedPattern)
+    const nomePergunta = resolveQuestionName(p, qNum, prefix, codeTemplate, detectedPattern, unitTemplate)
 
     xml += `  <question type="${questionType}">\n`
     xml += `    <name>\n      <text>${nomePergunta}</text>\n    </name>\n`
@@ -103,7 +107,7 @@ export function buildAllUnits(
       startQ = opts.unitOffsets[unitKey] ?? 1
     }
 
-    const xml = buildXml(questions, opts, startQ, detectedPattern)
+    const xml = buildXml(questions, opts, startQ, detectedPattern, unitKey)
     return { unitKey, questions, startQ, xml }
   })
 }
