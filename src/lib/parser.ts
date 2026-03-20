@@ -43,18 +43,17 @@ export function parseText(texto: string): ParseResult {
       const parenMatch = l.match(/[(（](.*?)[)）]/)
       const tituloHint = parenMatch ? parenMatch[1].trim() : ''
 
-      // Pattern: "Percurso X.Y" → uz=UX, mod=Y
-      // Pattern: "Percurso X"   → uz=UX, mod=''
-      const percFullMatch = tituloHint.match(/Percurso\s+(\d+)\.(\d+)/i)
+      // "Percurso 1.2" → unitKey=P1 (group by percurso), percursoMod=2
+      // "Percurso 1"   → unitKey=P1, percursoMod=''
+      const percFullMatch   = tituloHint.match(/Percurso\s+(\d+)\.(\d+)/i)
       const percSimpleMatch = tituloHint.match(/Percurso\s+(\d+)/i)
 
       let unitKey: string | null = null
       let percursoMod = ''
 
       if (percFullMatch) {
-        // "Percurso 1.2" → unitKey=P1.2, uz=U1, mod=2
-        unitKey    = `P${percFullMatch[1]}.${percFullMatch[2]}`
-        percursoMod = percFullMatch[2]
+        unitKey     = `P${percFullMatch[1]}`   // group by percurso number only
+        percursoMod = percFullMatch[2]          // store module separately
       } else if (percSimpleMatch) {
         unitKey = `P${percSimpleMatch[1]}`
       } else {
