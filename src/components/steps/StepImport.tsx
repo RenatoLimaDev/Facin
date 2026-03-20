@@ -15,12 +15,6 @@ export function StepImport() {
   const [loading, setLoading]   = useState(false)
   const [error, setError]       = useState('')
 
-  const formats = [
-    { ext: ".docx", color: "bg-transparent text-blue-400 border-blue-500/40" },
-    { ext: ".txt", color: "bg-transparent text-green-400 border-green-500/30" },
-    { ext: ".md", color: "bg-transparent text-purple-400 border-purple-500/30" },
-    { ext: ".rtf", color: "bg-transparent text-orange-400 border-orange-500/30" },
-  ]
   const handleFile = async (file: File) => {
     setFilename(file.name)
     setError('')
@@ -66,7 +60,7 @@ export function StepImport() {
       <div
         className={`relative border-2 border-dashed rounded-xl p-12 text-center cursor-pointer
           transition-all duration-200
-          ${dragging ? 'border-accent bg-accent/5' : 'border-border bg-surface hover:border-accent/45 hover:bg-surface/50'}`}
+          ${dragging ? 'border-accent bg-accent/5' : 'border-border bg-surface hover:border-accent/50'}`}
         onDragOver={e => { e.preventDefault(); setDragging(true) }}
         onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
@@ -75,7 +69,7 @@ export function StepImport() {
         <input
           ref={fileRef}
           type="file"
-          accept=".docx,.txt,.md,.rtf"
+          accept=".docx,.odt,.txt,.md,.rtf"
           className="hidden"
           onChange={e => e.target.files?.[0] && handleFile(e.target.files[0])}
         />
@@ -84,7 +78,7 @@ export function StepImport() {
           Arraste o arquivo ou clique para selecionar
         </div>
         <div className="text-white/40 text-sm">
-          Suporta .docx · .txt · .md e outros arquivos de texto
+          Suporta .docx · .odt · .txt · .md · .rtf
         </div>
         {filename && (
           <div className="mt-3 font-mono text-sm text-accent">✓ {filename}</div>
@@ -93,9 +87,9 @@ export function StepImport() {
 
       {/* Format pills */}
       <div className="flex gap-2 flex-wrap">
-        {formats.map(f => (
-          <span key={f.ext} className={`font-mono text-[11px] px-3 py-1 rounded-full border border-border ${f.color}`}>
-            {f.ext}
+        {['.docx', '.odt', '.txt', '.md', '.rtf'].map(f => (
+          <span key={f} className="font-mono text-[11px] px-3 py-1 rounded-full border border-border text-white/40">
+            {f}
           </span>
         ))}
       </div>
@@ -112,7 +106,7 @@ export function StepImport() {
       <textarea
         value={paste}
         onChange={e => setPaste(e.target.value)}
-        className="font-semibold input min-h-30 resize-y leading-7 bg-surface/70"
+        className="input min-h-[120px] resize-y leading-7"
         placeholder="Cole o texto aqui diretamente..."
       />
 
@@ -122,7 +116,7 @@ export function StepImport() {
         </div>
       )}
 
-      <button onClick={proceed} disabled={loading} className="font-bold text-[16px] btn-primary w-full text-base">
+      <button onClick={proceed} disabled={loading} className="btn-primary w-full text-base">
         {loading ? 'Lendo...' : 'Extrair texto e revisar →'}
       </button>
     </div>
