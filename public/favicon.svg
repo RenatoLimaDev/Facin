@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Background -->
+  <rect width="64" height="64" rx="14" fill="#0d0f14"/>
+  
+  <!-- Q letter - bold, slightly left -->
+  <text x="10" y="46" font-family="Georgia, serif" font-size="44" font-weight="900" fill="#4fffb0">Q</text>
+  
+  <!-- Arrow → -->
+  <line x1="38" y1="32" x2="56" y2="32" stroke="#a78bfa" stroke-width="3.5" stroke-linecap="round"/>
+  <polyline points="50,26 56,32 50,38" fill="none" stroke="#a78bfa" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- XML tag hint - small bar at bottom right -->
+  <rect x="36" y="44" width="20" height="5" rx="2.5" fill="#a78bfa" opacity="0.5"/>
+</svg>
