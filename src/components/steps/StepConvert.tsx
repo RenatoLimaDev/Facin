@@ -163,7 +163,7 @@ export function StepConvert() {
                              text-white px-2 py-1.5 outline-none focus:border-accent4 transition-colors"
                   style={{ width: w }}
                   placeholder={ph}
-                  value={(segments as Record<string, string>)[key]}
+                  value={segments[key]}
                   onChange={e => setSegments({ [key]: e.target.value })}
                   maxLength={6}
                 />
