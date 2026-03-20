@@ -35,21 +35,20 @@ export function StepConvert() {
   const multiUnit  = unitGroups.length > 1
 
   // Parse unitKey into uz and mod
-  // "P1"   → { uz: 'U1', mod: segments.mod }
-  // "P1.2" → { uz: 'U1', mod: '2' }
-  const parseUnitKey = (key: string): { uz: string; mod: string } => {
-    const fullMatch = key.match(/^P(\d+)\.(\d+)$/)
-    if (fullMatch) return { uz: `U${fullMatch[1]}`, mod: fullMatch[2] }
-    const simpleMatch = key.match(/^P(\d+)$/)
-    if (simpleMatch) return { uz: `U${simpleMatch[1]}`, mod: segments.mod }
+  // unitKey is always "P1", "P2"... (grouped by percurso number)
+  // mod comes from segments.mod (global fallback) or from question's percursoMod
+  const parseUnitKey = (key: string, groupMod?: string): { uz: string; mod: string } => {
+    const m = key.match(/^P(\d+)$/)
+    if (m) return { uz: `U${m[1]}`, mod: groupMod || segments.mod }
     return { uz: key, mod: segments.mod }
   }
 
   // Build code template for a given unit
-  const buildUnitTemplate = (unitKey: string): string => {
+  // groupMod = the module number extracted from "Percurso X.Y" for this group
+  const buildUnitTemplate = (unitKey: string, groupMod?: string): string => {
     const { prod, ano, tipo } = segments
     if (!prod || !ano || !tipo) return ''
-    const { uz, mod } = parseUnitKey(unitKey)
+    const { uz, mod } = parseUnitKey(unitKey, groupMod)
     if (!uz || !mod) return ''
     return `${prod}.${ano}.${uz}.${mod}.${tipo}.Q{n}`
   }
@@ -107,7 +106,9 @@ export function StepConvert() {
     // Build per-unit templates automatically
     const unitTemplates: Record<string, string> = {}
     unitGroups.forEach(g => {
-      const t = buildUnitTemplate(g.unitKey)
+      const mods = g.questions.map(q => q.percursoMod).filter(Boolean)
+      const groupMod = mods.length > 0 ? mods[0] : segments.mod
+      const t = buildUnitTemplate(g.unitKey, groupMod)
       if (t) unitTemplates[g.unitKey] = t
     })
 
@@ -123,14 +124,18 @@ export function StepConvert() {
   const downloadSingle = () => { if (units[0]) triggerDownload(units[0].xml, 'quiz.xml') }
 
   // Preview of generated codes per unit
+  // groupMod: use the most common percursoMod in the group, or segments.mod
   const codePreview = unitGroups.map(g => {
-    const { uz, mod } = parseUnitKey(g.unitKey)
+    const mods = g.questions.map(q => q.percursoMod).filter(Boolean)
+    const groupMod = mods.length > 0 ? mods[0] : segments.mod
+    const { uz, mod } = parseUnitKey(g.unitKey, groupMod)
     return {
-      key:   g.unitKey,
+      key:      g.unitKey,
       uz,
       mod,
-      tmpl:  buildUnitTemplate(g.unitKey),
-      count: g.questions.length,
+      groupMod,
+      tmpl:     buildUnitTemplate(g.unitKey, groupMod),
+      count:    g.questions.length,
     }
   })
 
