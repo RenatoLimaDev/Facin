@@ -62,7 +62,7 @@ export const useStore = create<AppState>((set) => ({
   setParsed: (perguntas, avisos) => set({ perguntas, avisos }),
 
   segments: DEFAULT_SEGMENTS,
-  setSegments: (s) => set(state => ({ segments: { ...state.segments, ...s } })),
+  setSegments: (s) => set(state => ({ segments: { ...state.segments, ...s } as CodeSegments })),
   codeTemplate: '',
   setCodeTemplate: (codeTemplate) => set({ codeTemplate }),
   detectedPattern: '',
