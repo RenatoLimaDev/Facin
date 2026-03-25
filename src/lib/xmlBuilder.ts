@@ -62,7 +62,7 @@ export function buildXml(
   perguntas.forEach((p, i) => {
     const isEssay    = p.questionType === 'essay'
     const corretas   = p.alternativas.filter(a => a.correta).length
-    const qType      = isEssay ? 'essay' : corretas > 1 ? 'multichoice_multi' : 'multichoice'
+    const qType      = isEssay ? 'essay' : 'multichoice'
     const fbGeral    = p.feedbackGeral || fbCorrect || fbIncorrect || ''
     const qNum       = startQ + i
     const nomePergunta = resolveQuestionName(p, qNum, prefix, codeTemplate, detectedPattern, unitTemplate, opts, uz)
