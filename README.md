@@ -1,4 +1,6 @@
-# EasyMoodle
+<p align="center">
+  <img src="https://raw.githubusercontent.com/RenatoLimaDev/Facin/main/public/facin-logo.svg" alt="Facin." height="40" />
+</p>
 
 > Converta listas de questões em XML Moodle com um clique — sem instalar nada, sem enviar dados para servidores.
 
@@ -27,7 +29,7 @@
 
 ## O que é
 
-**EasyMoodle** é uma aplicação web client-side que transforma arquivos de texto com questões (`.docx`, `.odt`, `.txt`, `.md`, `.rtf`) em XML compatível com a importação do Moodle. Todo o processamento acontece no navegador — nenhum dado sai do seu computador.
+**Facin.** é uma aplicação web client-side que transforma arquivos de texto com questões (`.docx`, `.odt`, `.txt`, `.md`, `.rtf`) em XML compatível com a importação do Moodle. Todo o processamento acontece no navegador — nenhum dado sai do seu computador.
 
 ---
 
@@ -113,8 +115,8 @@ Os testes cobrem as funções puras de parsing e geração de XML (`parser.ts`, 
 
 ```bash
 # Clone
-git clone https://github.com/seu-usuario/EasyMoodle.git
-cd EasyMoodle
+git clone https://github.com/seu-usuario/Facin.git
+cd Facin
 
 # Instale dependências
 npm install
@@ -148,7 +150,7 @@ src/
 │   │   └── xmlBuilder.test.ts
 │   ├── extractor.ts         # Extração de texto (DOCX, ODT, RTF, TXT)
 │   ├── parser.ts            # Parser de questões e detector de duplicatas
-│   └── xmlBuilder.ts        # Construtor de XML Moodle
+│   └── xmlBuilder.ts        # Construtor de XML
 ├── store/
 │   └── index.ts             # Estado global (Zustand)
 └── types/
@@ -201,3 +203,7 @@ Todo o processamento acontece localmente no navegador. Nenhum arquivo ou conteú
 ## Licença
 
 MIT © Renato Lima
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/RenatoLimaDev/Facin/main/public/sed-icon.svg" alt="SEDLABS" height="36" />
+</p>

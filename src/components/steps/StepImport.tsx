@@ -232,7 +232,7 @@ function CheckDuplicates() {
         </div>
       )}
 
-      {/* Banco Moodle XML — mesmo estilo do painel "Colar texto" */}
+      {/* Banco XML — mesmo estilo do painel "Colar texto" */}
       <div className="rounded-xl border border-border overflow-hidden">
         <div
           className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-colors
@@ -248,7 +248,7 @@ function CheckDuplicates() {
             <span>🗄️</span>
             {xmlFilename
               ? <span className="text-accent4">✓ {xmlFilename} <span className="text-white/30">— {refQs.length} questões no banco</span></span>
-              : <span>Banco Moodle XML <span className="text-white/20">(opcional)</span></span>
+              : <span>Banco XML <span className="text-white/20">(opcional)</span></span>
             }
           </div>
           <span className="text-white/25 text-xs font-mono">arrastar ou clicar</span>

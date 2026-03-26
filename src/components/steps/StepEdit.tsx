@@ -677,7 +677,7 @@ export function StepEdit() {
                                 {p.questionType === 'essay' && (
                                   <div className="space-y-2">
                                     <p className="text-[11px] font-mono text-accent3/60 italic pl-1">
-                                      ✏️ Dissertativa — o aluno responde em campo aberto no Moodle.
+                                      ✏️ Dissertativa — o aluno responde em campo aberto.
                                     </p>
                                     <textarea
                                       value={p.feedbackGeral}

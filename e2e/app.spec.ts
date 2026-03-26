@@ -20,7 +20,7 @@ test.describe('Tela de importação', () => {
   })
 
   test('exibe título e dropzone', async ({ page }) => {
-    await expect(page.getByText('EasyMoodle')).toBeVisible()
+    await expect(page.getByAltText('Facin.')).toBeVisible()
     await expect(page.getByText('Arraste o arquivo ou clique para selecionar')).toBeVisible()
     await screenshot(page, 'preview-import')
   })

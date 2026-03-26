@@ -12,20 +12,10 @@ export default function App() {
 
         {/* Compact top bar */}
         <header className="flex items-center gap-4 py-3 border-b border-border shrink-0 flex-wrap">
-          <div className="flex items-center gap-2.5">
-            <span style={{
-              fontFamily: 'var(--font-family-mono)',
-              fontSize: '10px',
-              color: 'var(--color-accent)',
-              border: '1px solid var(--color-accent)',
-              padding: '2px 8px',
-              borderRadius: '20px',
-              letterSpacing: '2px',
-              textTransform: 'uppercase',
-              opacity: 0.7,
-            }}>EasyMoodle</span>
-            <h1 className="text-xl font-extrabold tracking-tight whitespace-nowrap">
-              Texto → <span style={{ color: 'var(--color-accent)' }}>Moodle XML</span>
+          <div className="flex items-center gap-18">
+            <img src={`${import.meta.env.BASE_URL}facin-logo.svg`} alt="Facin." style={{ height: '36px' }} />
+            <h1 className="mt-2 text-xl font-extrabold tracking-tight">
+              Texto → <span style={{ color: 'var(--color-accent)' }}>XML</span>
             </h1>
           </div>
           <div className="flex-1" />
@@ -37,6 +27,11 @@ export default function App() {
           {step === 1 && <StepImport />}
           {step === 2 && <StepEdit />}
         </div>
+
+        {/* Footer */}
+        <footer className="shrink-0 py-2 flex justify-center">
+          <img src={`${import.meta.env.BASE_URL}sedlab.svg`} alt="SEDLABS" style={{ height: '28px', opacity: 0.35 }} />
+        </footer>
 
       </div>
     </div>

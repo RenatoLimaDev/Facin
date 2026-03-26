@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
 export default defineConfig({
-  base: '/EasyMoodle/',
+  base: '/Facin/',
   plugins: [
     react(),
     tailwindcss(),   // v4: plugin nativo no Vite, sem postcss

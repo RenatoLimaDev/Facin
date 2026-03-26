@@ -1,14 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Background -->
-  <rect width="64" height="64" rx="14" fill="#0d0f14"/>
-  
-  <!-- Q letter - bold, slightly left -->
-  <text x="10" y="46" font-family="Georgia, serif" font-size="44" font-weight="900" fill="#4fffb0">Q</text>
-  
-  <!-- Arrow → -->
-  <line x1="38" y1="32" x2="56" y2="32" stroke="#a78bfa" stroke-width="3.5" stroke-linecap="round"/>
-  <polyline points="50,26 56,32 50,38" fill="none" stroke="#a78bfa" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-  
-  <!-- XML tag hint - small bar at bottom right -->
-  <rect x="36" y="44" width="20" height="5" rx="2.5" fill="#a78bfa" opacity="0.5"/>
+<svg width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="150" height="150" rx="29" fill="#0D0F14"/>
+<path d="M51.785 114.848H31.305V33.824H91.465V50.464H51.785V69.024H88.905V85.664H51.785V114.848Z" fill="#4FFFB0"/>
+<path d="M122.559 96.672C122.73 98.5493 122.858 100.171 122.943 101.536C123.028 102.816 123.071 104.181 123.071 105.632C123.071 106.997 123.028 108.405 122.943 109.856C122.858 111.221 122.73 112.8 122.559 114.592C120.426 114.933 118.292 115.232 116.159 115.488C114.026 115.744 111.892 115.872 109.759 115.872C107.711 115.872 105.663 115.744 103.615 115.488C101.567 115.232 99.4763 114.933 97.343 114.592C97.087 112.885 96.9163 111.349 96.831 109.984C96.7457 108.533 96.703 107.125 96.703 105.76C96.703 104.48 96.7457 103.115 96.831 101.664C96.9163 100.213 97.087 98.5493 97.343 96.672C101.61 95.904 105.834 95.52 110.015 95.52C114.196 95.52 118.378 95.904 122.559 96.672Z" fill="#A78BFA"/>
 </svg>
