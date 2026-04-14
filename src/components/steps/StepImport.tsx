@@ -269,6 +269,25 @@ function CheckDuplicates() {
         </div>
       </div>
 
+      {/* Status de carregamento */}
+      {(qFilename || xmlFilename) && !loading && (
+        <div className="flex items-center gap-3 font-mono text-xs px-1 flex-wrap">
+          <span className={perguntas.length > 0 ? 'text-accent' : 'text-accent2'}>
+            {qFilename ? `📄 ${perguntas.length} questões carregadas` : '📄 nenhum arquivo'}
+          </span>
+          {xmlFilename && (
+            <span className={refQs.length > 0 ? 'text-accent4' : 'text-accent2'}>
+              🗄️ {refQs.length} no banco
+            </span>
+          )}
+          {perguntas.length > 0 && refQs.length > 0 && (
+            <span className={cross.length > 0 ? 'text-accent2 font-bold' : 'text-accent'}>
+              {cross.length > 0 ? `⚠️ ${cross.length} duplicata(s)` : '✅ sem duplicatas'}
+            </span>
+          )}
+        </div>
+      )}
+
       {error && (
         <div className="text-accent2 text-sm font-mono bg-accent2/10 border border-accent2/30 rounded-lg px-4 py-3">
           {error}
