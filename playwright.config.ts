@@ -6,7 +6,7 @@ export default defineConfig({
   retries: 0,
   reporter: 'list',
   use: {
-    baseURL: 'http://localhost:5173',
+    baseURL: 'http://localhost:4173',
     headless: true,
     viewport: { width: 1280, height: 720 },
     locale: 'pt-BR',
@@ -24,8 +24,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:5173/Facin/',
+    command: 'npm run preview',
+    url: 'http://localhost:4173/Facin/',
     reuseExistingServer: true,
     timeout: 15_000,
   },
