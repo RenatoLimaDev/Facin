@@ -528,14 +528,12 @@ export function StepImport() {
             {loading ? 'Lendo...' : 'Extrair texto e revisar →'}
           </button>
 
-          <div className="text-center">
-            <button
-              onClick={() => { setRawText(''); setParsed([], []); setStep(2) }}
-              className="font-mono text-[11px] text-white/20 hover:text-white/50 transition-colors duration-200"
-            >
-              ou criar questões manualmente →
-            </button>
-          </div>
+          <button
+            onClick={() => { setRawText(''); setParsed([], []); setStep(2) }}
+            className="btn-secondary w-full text-sm"
+          >
+            ✏️ Criar questões manualmente
+          </button>
         </>
       )}
 

@@ -26,7 +26,12 @@ export function StepEdit() {
 
   const [viewMode, setViewMode] = useState<'text' | 'cards'>('cards')
   const [feedbackMode, setFeedbackMode] = useState<Map<number, 'geral' | 'item'>>(new Map())
-  const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set())
+  const [expandedCards, setExpandedCards] = useState<Set<number>>(() =>
+    perguntas.length > 0 && perguntas.length <= 5
+      ? new Set(perguntas.map((_, i) => i))
+      : new Set()
+  )
+  const [showAdvanced, setShowAdvanced] = useState(false)
 
   const cycleFeedback = (qi: number) => {
     setFeedbackMode(prev => {
@@ -101,6 +106,10 @@ export function StepEdit() {
     }
     return issues
   })
+
+  useEffect(() => {
+    if (rawText === '' && perguntas.length === 0) addQuestion()
+  }, [])
 
   useEffect(() => {
     // Detect from raw text (full codes like 001.261.U1.1.O.Q1)
@@ -465,8 +474,15 @@ export function StepEdit() {
             return (
               <div className="space-y-2">
                 {/* Global config bar */}
-                <div className="flex items-center gap-x-4 gap-y-1 flex-wrap px-1 py-2 border-b border-border">
-                  <span className="text-[10px] font-mono text-white/25 uppercase tracking-widest">Campos globais</span>
+                <div className="border-b border-border">
+                <button
+                  onClick={() => setShowAdvanced(v => !v)}
+                  className="w-full flex items-center gap-2 px-1 py-2 text-left hover:bg-white/3 transition-colors"
+                >
+                  <span className="text-[10px] font-mono text-white/25 uppercase tracking-widest">⚙ Configurações avançadas</span>
+                  <span className="text-white/20 text-[10px] ml-auto">{showAdvanced ? '▲' : '▼'}</span>
+                </button>
+                {showAdvanced && <div className="flex items-center gap-x-4 gap-y-1 flex-wrap px-1 pb-2">
                   {([
                     { key: 'prod', label: 'Prod',    ph: '001' },
                     { key: 'ano',  label: 'Ano/Sem', ph: '261' },
@@ -546,6 +562,7 @@ export function StepEdit() {
                   })()}
 
                   <span className="text-[10px] font-mono text-white/20 ml-auto">{perguntas.length} questões</span>
+                </div>}
                 </div>
 
                 {/* Cards — grouped by percurso */}
