@@ -8,14 +8,14 @@ async function screenshot(page: Page, name: string) {
 }
 
 async function waitReady(page: Page) {
-  await page.waitForLoadState('networkidle')
+  await page.waitForLoadState('domcontentloaded')
 }
 
 // ── Tela inicial ──────────────────────────────────────────────────────────────
 
 test.describe('Tela de importação', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/Facin/', { waitUntil: 'domcontentloaded' })
     await waitReady(page)
   })
 
@@ -62,7 +62,7 @@ test.describe('Tela de importação', () => {
 
 test.describe('Importar arquivo e editar', () => {
   test('importa arquivo .txt e vai para editor', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/Facin/', { waitUntil: 'domcontentloaded' })
     await waitReady(page)
     await page.locator('input[type="file"]').first().setInputFiles(path.join(SAMPLES, 'simples.txt'))
     await page.getByRole('button', { name: /Extrair texto e revisar/ }).click()
@@ -71,7 +71,7 @@ test.describe('Importar arquivo e editar', () => {
   })
 
   test('alterna para edição por cards', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/Facin/', { waitUntil: 'domcontentloaded' })
     await waitReady(page)
     await page.locator('input[type="file"]').first().setInputFiles(path.join(SAMPLES, 'simples.txt'))
     await page.getByRole('button', { name: /Extrair texto e revisar/ }).click()
@@ -81,7 +81,7 @@ test.describe('Importar arquivo e editar', () => {
   })
 
   test('exibe contador de questões no editor de texto', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/Facin/', { waitUntil: 'domcontentloaded' })
     await waitReady(page)
     await page.locator('input[type="file"]').first().setInputFiles(path.join(SAMPLES, 'simples.txt'))
     await page.getByRole('button', { name: /Extrair texto e revisar/ }).click()
@@ -90,7 +90,7 @@ test.describe('Importar arquivo e editar', () => {
   })
 
   test('importa arquivo com código e detecta padrão', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/Facin/', { waitUntil: 'domcontentloaded' })
     await waitReady(page)
     await page.locator('input[type="file"]').first().setInputFiles(path.join(SAMPLES, 'com-codigo.txt'))
     await page.getByRole('button', { name: /Extrair texto e revisar/ }).click()
@@ -102,7 +102,7 @@ test.describe('Importar arquivo e editar', () => {
 
 test.describe('Verificar Duplicatas', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/Facin/', { waitUntil: 'domcontentloaded' })
     await waitReady(page)
     await page.getByText('🔍 Verificar Duplicadas').click()
   })
@@ -136,7 +136,7 @@ test.describe('Verificar Duplicatas', () => {
 
 test.describe('Criar questão manualmente', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/Facin/', { waitUntil: 'domcontentloaded' })
     await waitReady(page)
     await page.getByText('ou criar questões manualmente →').click()
   })
@@ -170,7 +170,7 @@ test.describe('Criar questão manualmente', () => {
 
 test.describe('Gerar XML', () => {
   test('gera XML e abre modal automaticamente', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/Facin/', { waitUntil: 'domcontentloaded' })
     await waitReady(page)
     await page.locator('input[type="file"]').first().setInputFiles(path.join(SAMPLES, 'com-codigo.txt'))
     await page.getByRole('button', { name: /Extrair texto e revisar/ }).click()
@@ -183,7 +183,7 @@ test.describe('Gerar XML', () => {
   })
 
   test('botão Baixar quiz.xml visível após gerar', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/Facin/', { waitUntil: 'domcontentloaded' })
     await waitReady(page)
     await page.locator('input[type="file"]').first().setInputFiles(path.join(SAMPLES, 'simples.txt'))
     await page.getByRole('button', { name: /Extrair texto e revisar/ }).click()
@@ -193,7 +193,7 @@ test.describe('Gerar XML', () => {
   })
 
   test('botão Baixar quiz.gift visível após gerar', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/Facin/', { waitUntil: 'domcontentloaded' })
     await waitReady(page)
     await page.locator('input[type="file"]').first().setInputFiles(path.join(SAMPLES, 'simples.txt'))
     await page.getByRole('button', { name: /Extrair texto e revisar/ }).click()
@@ -207,7 +207,7 @@ test.describe('Gerar XML', () => {
 
 test.describe('Navegação entre passos', () => {
   test('botão Voltar retorna para importação', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/Facin/', { waitUntil: 'domcontentloaded' })
     await waitReady(page)
     await page.getByText('ou criar questões manualmente →').click()
     await expect(page.getByText('Revise o texto extraído')).toBeVisible()
