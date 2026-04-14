@@ -146,8 +146,20 @@ function CheckDuplicates() {
     setError('')
     setLoading(true)
     try {
-      const texto = await extractText(file)
-      const { perguntas: qs } = parseText(texto)
+      let qs: Question[]
+      if (file.name.toLowerCase().endsWith('.xml')) {
+        const text = await file.text()
+        const extracted = extractXmlQuestions(text)
+        if (extracted.length === 0) { setError('Nenhuma questão encontrada no XML.'); return }
+        qs = extracted.map((q, i) => ({
+          texto: q.texto, tituloHint: '', codigoQ: q.name,
+          seqNum: String(i + 1), unitKey: null, percursoMod: '',
+          alternativas: [], feedbackGeral: '', linha: i, formato: 'A',
+        }))
+      } else {
+        const texto = await extractText(file)
+        qs = parseText(texto).perguntas
+      }
       setPerguntas(qs)
       setQFilename(file.name)
       setShowPreview(false)
@@ -205,12 +217,14 @@ function CheckDuplicates() {
         <input ref={qFileRef} type="file" accept=".docx,.odt,.txt,.md,.rtf,.xml" className="hidden"
           onChange={e => e.target.files?.[0] && loadQuestions(e.target.files[0])} />
         {loading ? (
-          <div className="text-white/40 text-sm font-mono">Lendo…</div>
+          <div className="text-white/40 text-sm font-mono animate-pulse">⏳ Lendo arquivo…</div>
         ) : qFilename ? (
           <div className="flex items-center justify-between">
             <div className="font-mono text-sm text-accent">
               ✓ {qFilename}
-              {perguntas.length > 0 && <span className="text-white/30 ml-2">— {perguntas.length} questões</span>}
+              {perguntas.length > 0
+                ? <span className="text-white/30 ml-2">— {perguntas.length} questões</span>
+                : <span className="text-accent2 ml-2">— nenhuma questão reconhecida</span>}
             </div>
             <span className="text-[11px] font-mono text-white/25">trocar arquivo</span>
           </div>
@@ -255,9 +269,35 @@ function CheckDuplicates() {
         </div>
       </div>
 
+      {/* Status de carregamento */}
+      {(qFilename || xmlFilename) && !loading && (
+        <div className="flex items-center gap-3 font-mono text-xs px-1 flex-wrap">
+          <span className={perguntas.length > 0 ? 'text-accent' : 'text-accent2'}>
+            {qFilename ? `📄 ${perguntas.length} questões carregadas` : '📄 nenhum arquivo'}
+          </span>
+          {xmlFilename && (
+            <span className={refQs.length > 0 ? 'text-accent4' : 'text-accent2'}>
+              🗄️ {refQs.length} no banco
+            </span>
+          )}
+          {perguntas.length > 0 && refQs.length > 0 && (
+            <span className={cross.length > 0 ? 'text-accent2 font-bold' : 'text-accent'}>
+              {cross.length > 0 ? `⚠️ ${cross.length} duplicata(s)` : '✅ sem duplicatas'}
+            </span>
+          )}
+        </div>
+      )}
+
       {error && (
         <div className="text-accent2 text-sm font-mono bg-accent2/10 border border-accent2/30 rounded-lg px-4 py-3">
           {error}
+        </div>
+      )}
+
+      {/* Sem questões encontradas */}
+      {qFilename && !loading && perguntas.length === 0 && !error && (
+        <div className="text-accent3 text-sm font-mono bg-accent3/10 border border-accent3/30 rounded-lg px-4 py-3">
+          ⚠️ Nenhuma questão reconhecida no arquivo. Verifique se o formato está correto (ex: <span className="text-white/60">1) Enunciado / A) Alternativa</span>).
         </div>
       )}
 
@@ -530,7 +570,8 @@ export function StepImport() {
 
           <button
             onClick={() => { setRawText(''); setParsed([], []); setStep(2) }}
-            className="btn-secondary w-full text-sm"
+            className="w-full py-3 rounded-xl border-2 border-dashed border-accent4/50 text-accent4
+                       font-semibold text-sm hover:border-accent4 hover:bg-accent4/10 transition-all duration-200"
           >
             ✏️ Criar questões manualmente
           </button>
