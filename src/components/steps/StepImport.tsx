@@ -146,8 +146,20 @@ function CheckDuplicates() {
     setError('')
     setLoading(true)
     try {
-      const texto = await extractText(file)
-      const { perguntas: qs } = parseText(texto)
+      let qs: Question[]
+      if (file.name.toLowerCase().endsWith('.xml')) {
+        const text = await file.text()
+        const extracted = extractXmlQuestions(text)
+        if (extracted.length === 0) { setError('Nenhuma questão encontrada no XML.'); return }
+        qs = extracted.map((q, i) => ({
+          texto: q.texto, tituloHint: '', codigoQ: q.name,
+          seqNum: String(i + 1), unitKey: null, percursoMod: '',
+          alternativas: [], feedbackGeral: '', linha: i, formato: 'A',
+        }))
+      } else {
+        const texto = await extractText(file)
+        qs = parseText(texto).perguntas
+      }
       setPerguntas(qs)
       setQFilename(file.name)
       setShowPreview(false)
