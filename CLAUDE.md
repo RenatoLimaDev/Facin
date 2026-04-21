@@ -121,3 +121,8 @@ Ver seção **Backlog** abaixo. Pegar o item de maior prioridade.
 - **Moodle multichoice multi**: usa `type="multichoice"` + `<single>false</single>`, não existe `type="multichoice_multi"`
 - **GIFT escape**: caracteres `~=#{}\\` precisam de `\` antes; `&` não precisa em GIFT
 - **extractor.ts excluído da cobertura**: depende de DOMParser (browser API), difícil no Node env
+
+<!-- SPECKIT START -->
+For additional context about technologies to be used, project structure,
+shell commands, and other important information, read the current plan
+<!-- SPECKIT END -->
