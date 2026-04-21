@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/save-session-state.sh",
+            "timeout": 10,
+            "statusMessage": "Salvando estado da sessão..."
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/load-session-state.sh",
+            "timeout": 5,
+            "statusMessage": "Carregando estado anterior..."
+          }
+        ]
+      }
+    ]
+  }
+}
